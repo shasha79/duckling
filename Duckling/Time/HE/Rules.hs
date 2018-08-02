@@ -378,7 +378,7 @@ ruleFromDatetimeDatetimeInterval = Rule
   , pattern =
     [ regex "מ|משעה"
     , dimension Time
-    , regex "\\-|עד"
+    , regex "\\-|עד|לפני"
     , dimension Time
     ]
   , prod = \tokens -> case tokens of
@@ -770,7 +770,7 @@ ruleUntilTimeofday :: Rule
 ruleUntilTimeofday = Rule
   { name = "until <time-of-day>"
   , pattern =
-    [ regex "(עד|לפני)"
+    [ regex "עד"
     , dimension Time
     ]
   , prod = \tokens -> case tokens of
