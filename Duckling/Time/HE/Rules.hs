@@ -770,7 +770,7 @@ ruleUntilTimeofday :: Rule
 ruleUntilTimeofday = Rule
   { name = "until <time-of-day>"
   , pattern =
-    [ regex "עד"
+    [ regex "(עד|לפני)"
     , dimension Time
     ]
   , prod = \tokens -> case tokens of
