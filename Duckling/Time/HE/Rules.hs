@@ -289,7 +289,7 @@ ruleDatetimeDatetimeInterval = Rule
   { name = "<datetime> - <datetime> (interval)"
   , pattern =
     [ Predicate isNotLatent
-    , regex "\\-|ע(ד)?"
+    , regex "\\-|ע(ד)?|לפני"
     , Predicate isNotLatent
     ]
   , prod = \tokens -> case tokens of
@@ -554,7 +554,7 @@ ruleAfternoon = Rule
     [ regex "אחה(״)?צ|אחר הצהריים"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
-      interval TTime.Open (hour False 12) (hour False 19)
+      interval TTime.Open (hour False 12) (hour False 17)
   }
 
 ruleNamedmonthDayofmonthOrdinal :: Rule
@@ -677,7 +677,7 @@ ruleThisEvening = Rule
     [ regex "הערב"
     ]
   , prod = \_ -> do
-      td <- interval TTime.Open (hour False 18) (hour False 0)
+      td <- interval TTime.Open (hour False 17) (hour False 0)
       Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
   }
 
@@ -770,7 +770,7 @@ ruleUntilTimeofday :: Rule
 ruleUntilTimeofday = Rule
   { name = "until <time-of-day>"
   , pattern =
-    [ regex "עד"
+    [ regex "עד|לפני"
     , dimension Time
     ]
   , prod = \tokens -> case tokens of
@@ -1186,10 +1186,10 @@ ruleEveningnight :: Rule
 ruleEveningnight = Rule
   { name = "evening|night"
   , pattern =
-    [ regex "(ב)?ערב"
+    [ regex "(ב)?(ערב|שעות הערב)"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
-      interval TTime.Open (hour False 18) (hour False 0)
+      interval TTime.Open (hour False 17) (hour False 0)
   }
 
 ruleOrdinalQuarter :: Rule

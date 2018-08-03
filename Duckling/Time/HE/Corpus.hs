@@ -276,7 +276,8 @@ allExamples = concat
              ]
   , examples (datetimeInterval ((2013, 2, 13, 18, 0, 0), (2013, 2, 14, 0, 0, 0)) Hour)
              [ "מחר בערב"
-             ]
+              , "מחר בשעות הערב" ]
+                                                                                       
   , examples (datetimeInterval ((2013, 2, 13, 12, 0, 0), (2013, 2, 13, 14, 0, 0)) Hour)
              [ "מחר בצהריים"
              , "מחר צהריים"
