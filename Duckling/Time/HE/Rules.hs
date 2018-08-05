@@ -1282,6 +1282,16 @@ ruleTomorrow = Rule
   , prod = \_ -> tt $ cycleNth TG.Day 1
   }
 
+ruleDayAfterTomorrow :: Rule
+ruleDayAfterTomorrow = Rule
+  { name = "day after tomorrow"
+  , pattern =
+    [ regex "מחרתיים"
+    ]
+  , prod = \_ -> tt $ cycleNth TG.Day 2
+  }
+
+
 ruleTimeofdayOclock :: Rule
 ruleTimeofdayOclock = Rule
   { name = "<time-of-day> o'clock"
@@ -1440,6 +1450,7 @@ rules =
   , ruleTimeofdayOclock
   , ruleToday
   , ruleTomorrow
+  , ruleDayAfterTomorrow
   , ruleUntilTimeofday
   , ruleWeekend
   , ruleYear

@@ -39,6 +39,9 @@ allExamples = concat
   , examples (datetime (2013, 2, 13, 0, 0, 0) Day)
              [ "מחר"
              ]
+  , examples (datetime (2013, 2, 14, 0, 0, 0) Day)
+             [ "מחרתיים"
+             ]
   , examples (datetime (2013, 2, 17, 0, 0, 0) Day)
              [ "ראשון"
              , "יום ראשון"
