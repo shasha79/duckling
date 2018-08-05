@@ -330,13 +330,28 @@ ruleInDuration :: Rule
 ruleInDuration = Rule
   { name = "in <duration>"
   , pattern =
-    [ regex "בעוד"
+    [ regex "ב?עוד"
     , dimension Duration
     ]
   , prod = \tokens -> case tokens of
       (_:Token Duration dd:_) -> tt $ inDuration dd
       _ -> Nothing
   }
+
+ruleDayInDuration :: Rule
+ruleDayInDuration = Rule
+  { name = "<day> in <duration>"
+  , pattern =
+    [ Predicate $ or . sequence [isGrainOfTime TG.Day, isGrainOfTime TG.Month]
+    , regex "ב?עוד"
+    , dimension Duration
+    ]
+  , prod = \tokens -> case tokens of
+      (Token Time td:_:Token Duration dd:_) ->
+        Token Time <$> intersect td (inDurationInterval dd)
+      _ -> Nothing
+  }
+
 
 ruleInNamedmonth :: Rule
 ruleInNamedmonth = Rule
@@ -1391,6 +1406,7 @@ rules =
   , ruleHourofdayQuarter
   , ruleHourofdayHalf
   , ruleInDuration
+  , ruleDayInDuration
   , ruleInNamedmonth
   , ruleIntersect
   , ruleIntersectBy

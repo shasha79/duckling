@@ -109,6 +109,45 @@ ruleExactlyDuration = Rule
       _ -> Nothing
   }
 
+
+ruleWeek :: Rule
+ruleWeek = Rule
+  { name = "a week"
+  , pattern =
+    [ regex "שבוע"
+    ]
+  , prod = \_ -> Just . Token Duration $ duration TG.Week 1
+  }
+
+ruleTwoWeeks :: Rule
+ruleTwoWeeks = Rule
+  { name = "two weeks"
+  , pattern =
+    [ regex "שבועי?ים"
+    ]
+  , prod = \_ -> Just . Token Duration $ duration TG.Week 2
+  }
+
+ruleMonth :: Rule
+ruleMonth = Rule
+  { name = "a month"
+  , pattern =
+    [ regex "חודש"
+    ]
+  , prod = \_ -> Just . Token Duration $ duration TG.Month 1
+  }
+
+ruleTwoMonths :: Rule
+ruleTwoMonths = Rule
+  { name = "two months"
+  , pattern =
+    [ regex "חודשיים"
+    ]
+  , prod = \_ -> Just . Token Duration $ duration TG.Month 2
+  }
+
+
+
 rules :: [Rule]
 rules =
   [ ruleAboutDuration
@@ -118,4 +157,8 @@ rules =
   , ruleNumbernumberHours
   , ruleQuarterOfAnHour
   , ruleThreequartersOfAnHour
+  , ruleWeek
+  , ruleTwoWeeks
+  , ruleMonth
+  , ruleTwoMonths
   ]

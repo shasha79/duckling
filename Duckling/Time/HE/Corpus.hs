@@ -260,6 +260,19 @@ allExamples = concat
   , examples (datetime (2013, 2, 19, 4, 0, 0) Hour)
              [ "בעוד שבעה ימים"
              ]
+  , examples (datetime (2013, 2, 19, 0, 0, 0) Day)
+             [  "בעוד שבוע"
+             ]
+  , examples (datetime (2013, 2, 26, 0, 0, 0) Day)
+             [ "בעוד שבועיים"
+             , "בעוד שבועים"
+             ]
+  , examples (datetime (2013, 3, 12, 0, 0, 0) Day)
+             [ "בעוד חודש"
+             ]
+  , examples (datetime (2013, 4, 12, 0, 0, 0) Day)
+             [ "בעוד חודשיים"
+             ]
   , examples (datetime (2013, 2, 5, 4, 0, 0) Hour)
              [ "לפני שבעה ימים"
              ]
@@ -270,14 +283,14 @@ allExamples = concat
   , examples (datetime (1954, 0, 0, 0, 0, 0) Year)
              [ "1954"
              ]
-  , examples (datetimeInterval ((2013, 2, 12, 18, 0, 0), (2013, 2, 13, 0, 0, 0)) Hour)
+  , examples (datetimeInterval ((2013, 2, 12, 17, 0, 0), (2013, 2, 13, 0, 0, 0)) Hour)
              [ "הערב"
              , "היום בערב"
              ]
   , examples (datetimeInterval ((2013, 2, 8, 18, 0, 0), (2013, 2, 11, 0, 0, 0)) Hour)
              [ "בסופ״ש האחרון"
              ]
-  , examples (datetimeInterval ((2013, 2, 13, 18, 0, 0), (2013, 2, 14, 0, 0, 0)) Hour)
+  , examples (datetimeInterval ((2013, 2, 13, 17, 0, 0), (2013, 2, 14, 0, 0, 0)) Hour)
              [ "מחר בערב"
               , "מחר בשעות הערב" ]
                                                                                        
