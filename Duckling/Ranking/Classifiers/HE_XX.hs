@@ -533,15 +533,15 @@ classifiers
                                likelihoods = HashMap.fromList [("", 0.0)], n = 6}}),
        ("next <day-of-week>",
         Classifier{okData =
+                     ClassData{prior = -infinity, unseen = -1.0986122886681098,
+                               likelihoods = HashMap.fromList [], n = 0},
+                   koData =
                      ClassData{prior = 0.0, unseen = -2.1972245773362196,
                                likelihoods =
                                  HashMap.fromList
                                    [("day", -0.6931471805599453),
                                     ("named-day", -0.6931471805599453)],
-                               n = 3},
-                   koData =
-                     ClassData{prior = -infinity, unseen = -1.0986122886681098,
-                               likelihoods = HashMap.fromList [], n = 0}}),
+                               n = 3}}),
        ("half an hour",
         Classifier{okData =
                      ClassData{prior = 0.0, unseen = -1.0986122886681098,
@@ -749,12 +749,12 @@ classifiers
                                likelihoods = HashMap.fromList [("", 0.0)], n = 1}}),
        ("named-day",
         Classifier{okData =
-                     ClassData{prior = -3.7740327982847086e-2,
-                               unseen = -3.332204510175204,
-                               likelihoods = HashMap.fromList [("", 0.0)], n = 26},
+                     ClassData{prior = -0.16034265007517937,
+                               unseen = -3.2188758248682006,
+                               likelihoods = HashMap.fromList [("", 0.0)], n = 23},
                    koData =
-                     ClassData{prior = -3.295836866004329, unseen = -1.0986122886681098,
-                               likelihoods = HashMap.fromList [("", 0.0)], n = 1}}),
+                     ClassData{prior = -1.9095425048844386, unseen = -1.791759469228055,
+                               likelihoods = HashMap.fromList [("", 0.0)], n = 4}}),
        ("ordinal 1",
         Classifier{okData =
                      ClassData{prior = -infinity, unseen = -0.6931471805599453,
