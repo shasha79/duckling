@@ -486,6 +486,26 @@ ruleToday = Rule
   , prod = \_ -> tt $ cycleNth TG.Day 0
   }
 
+ruleThisWeek :: Rule
+ruleThisWeek = Rule
+  { name = "this week"
+  , pattern =
+    [ regex "השבוע"
+    ]
+  , prod = \_ -> tt $ cycleNth TG.Week 0
+  }
+
+
+ruleThisMonth :: Rule
+ruleThisMonth = Rule
+  { name = "this month"
+  , pattern =
+    [ regex "החודש"
+    ]
+  , prod = \_ -> tt $ cycleNth TG.Month 0
+  }
+
+
 ruleBetweenTimeofdayAndTimeofdayInterval :: Rule
 ruleBetweenTimeofdayAndTimeofdayInterval = Rule
   { name = "between <time-of-day> and <time-of-day> (interval)"
@@ -1472,5 +1492,7 @@ rules =
   , ruleYear
   , ruleYesterday
   , ruleYyyymmdd
+  , ruleThisWeek
+  , ruleThisMonth
   ]
   ++ ruleMonths
