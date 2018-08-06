@@ -763,7 +763,7 @@ timeRound t TG.Week = TimeObject {start = s, grain = TG.Week, end = Nothing}
   where
     Time.UTCTime day diffTime = start $ timeRound t TG.Day
     (year, week, _) = Time.toWeekDate day
-    newDay = Time.fromWeekDate year week 1
+    newDay = Time.fromWeekDate year (week-1) 7
     s = Time.UTCTime newDay diffTime
 timeRound t TG.Quarter = newTime {grain = TG.Quarter}
   where

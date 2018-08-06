@@ -40,7 +40,7 @@ ruleNextDayofweek = Rule
     ]
   , prod = \tokens -> case tokens of
       (Token Time td:_) ->
-        tt $ predNth 0 True td
+        tt $ predNth 1 True td
       _ -> Nothing
   }
 
