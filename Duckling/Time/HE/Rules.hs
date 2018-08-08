@@ -474,7 +474,10 @@ ruleNoon = Rule
   , pattern =
     [ regex "(ב)?צהריים"
     ]
-  , prod = \_ -> tt $ hour False 12
+  {-, prod = \_ -> tt $ hour False 12 -}
+    , prod = \_ -> Token Time . partOfDay . mkLatent <$>
+      interval TTime.Open (hour False 12) (hour False 1)
+
   }
 
 ruleToday :: Rule
@@ -704,17 +707,65 @@ ruleDayofmonthOrdinalOfNamedmonth = Rule
       (token:_:Token Time td:_) -> Token Time <$> intersectDOM td token
       _ -> Nothing
   }
+{- TODO: generalize morning, evening (not working for some reason)
+ruleThisPartOfDay :: Rule
+ruleThisPartOfDay = Rule
+  { name = "this <part-of-day>"
+  , pattern =
+    [ regex "ל|ה|ב"
+    , Predicate isAPartOfDay
+    ]
+  , prod = \tokens -> case tokens of
+      (_:Token Time td:_ ) -> Token Time <$> intersect (cycleNth TG.Day 0) td
+      _ -> Nothing
+  }
+-}
 
 ruleThisEvening :: Rule
 ruleThisEvening = Rule
   { name = "this evening"
   , pattern =
-    [ regex "הערב"
+    [ regex "(ל|ב|ה)ערב"
     ]
   , prod = \_ -> do
       td <- interval TTime.Open (hour False 17) (hour False 0)
       Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
   }
+
+ruleThisMorning :: Rule
+ruleThisMorning = Rule
+  { name = "this morning"
+  , pattern =
+    [ regex "(ל|ב|ה)בוקר"
+    ]
+  , prod = \_ -> do
+      td <- interval TTime.Open (hour False 4) (hour False 12)
+      Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
+  }
+
+ruleThisNoon :: Rule
+ruleThisNoon = Rule
+  { name = "this noon"
+  , pattern =
+    [ regex "(ל|ב|ה)צהריים"
+    ]
+  , prod = \_ -> do
+      td <- interval TTime.Open (hour False 12) (hour False 14)
+      Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
+  }
+
+ruleThisAfternoon :: Rule
+ruleThisAfternoon = Rule
+  { name = "this afternoon"
+  , pattern =
+    [ regex "אחה(״)?צ|אחרי? ה?צהריים"
+    ]
+  , prod = \_ -> do
+      td <- interval TTime.Open (hour False 12) (hour False 17)
+      Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
+  }
+
+
 
 ruleBetweenDatetimeAndDatetimeInterval :: Rule
 ruleBetweenDatetimeAndDatetimeInterval = Rule
@@ -1478,6 +1529,9 @@ rules =
   , ruleTheOrdinalCycleAfterTime
   , ruleThisCycle
   , ruleThisEvening
+  , ruleThisMorning
+  , ruleThisNoon
+  , ruleThisAfternoon
   , ruleThisTime
   , ruleTimeOfPartofday
   , ruleTimePartofday
@@ -1494,5 +1548,6 @@ rules =
   , ruleYyyymmdd
   , ruleThisWeek
   , ruleThisMonth
+  {-, ruleThisPartOfDay -}
   ]
   ++ ruleMonths
