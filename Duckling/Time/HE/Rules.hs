@@ -1301,7 +1301,7 @@ ruleNamedday3 = Rule
     ]
   , prod = \_ -> tt $ dayOfWeek 2
   }
-
+{- Weird rule, disabled for now (gives from אני רוצה שלישי הבא"  -> ה שלישי בא)
 ruleTheDayofmonthOrdinal :: Rule
 ruleTheDayofmonthOrdinal = Rule
   { name = "the <day-of-month> (ordinal)"
@@ -1315,6 +1315,7 @@ ruleTheDayofmonthOrdinal = Rule
        _) -> tt $ dayOfMonth v
       _ -> Nothing
   }
+-}
 
 ruleDurationBeforeTime :: Rule
 ruleDurationBeforeTime = Rule
@@ -1524,7 +1525,7 @@ rules =
   , ruleTheCycleAfterTime
   , ruleTheCycleBeforeTime
   , ruleTheDayofmonthNonOrdinal
-  , ruleTheDayofmonthOrdinal
+  {-, ruleTheDayofmonthOrdinal -}
   , ruleTheIdesOfNamedmonth
   , ruleTheOrdinalCycleAfterTime
   , ruleThisCycle
