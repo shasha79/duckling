@@ -566,7 +566,7 @@ ruleLunch :: Rule
 ruleLunch = Rule
   { name = "lunch"
   , pattern =
-    [ regex "(ב)?צהריים"
+    [ regex "(ב)?(הצהריים|שעות ה?צהריים)"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
       interval TTime.Open (hour False 12) (hour False 14)
@@ -1013,7 +1013,7 @@ ruleMorning :: Rule
 ruleMorning = Rule
   { name = "morning"
   , pattern =
-    [ regex "(ב)?בוקר"
+    [ regex "(ב)?(בוקר|שעות ה?בוקר)"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
       interval TTime.Open (hour False 4) (hour False 12)
@@ -1272,7 +1272,7 @@ ruleEveningnight :: Rule
 ruleEveningnight = Rule
   { name = "evening|night"
   , pattern =
-    [ regex "(ב)?(ערב|שעות הערב)"
+    [ regex "(ב)?(ערב|שעות ה?ערב)"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
       interval TTime.Open (hour False 17) (hour False 0)
