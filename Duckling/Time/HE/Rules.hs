@@ -60,7 +60,7 @@ ruleAtHourTimeofday :: Rule
 ruleAtHourTimeofday = Rule
   { name = "at hour <time-of-day>"
   , pattern =
-    [ regex "בשעה"
+    [ regex "ב?שעה"
     , Predicate isATimeOfDay
     ]
   , prod = \tokens -> case tokens of
