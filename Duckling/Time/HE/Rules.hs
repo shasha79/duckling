@@ -908,7 +908,7 @@ ruleWeekend :: Rule
 ruleWeekend = Rule
   { name = "week-end"
   , pattern =
-    [ regex "(סופ״ש|סוף השבוע)"
+    [ regex "(סופש|סופ״ש|סוף ה?שבוע)"
     ]
   , prod = \_ -> tt weekend
   }
