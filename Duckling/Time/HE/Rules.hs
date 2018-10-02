@@ -476,7 +476,7 @@ ruleNoon = Rule
     ]
   {-, prod = \_ -> tt $ hour False 12 -}
     , prod = \_ -> Token Time . partOfDay . mkLatent <$>
-      interval TTime.Open (hour False 12) (hour False 1)
+      interval TTime.Open (hour False 12) (hour False 16)
 
   }
 
@@ -569,7 +569,7 @@ ruleLunch = Rule
     [ regex "(ב)?(הצהריים|שעות ה?צהריים)"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
-      interval TTime.Open (hour False 12) (hour False 14)
+      interval TTime.Open (hour False 12) (hour False 16)
   }
 
 ruleLastCycle :: Rule
@@ -589,10 +589,10 @@ ruleAfternoon :: Rule
 ruleAfternoon = Rule
   { name = "afternoon"
   , pattern =
-    [ regex "אחה(״)?צ|אחר הצהריים"
+    [ regex "אחה(״)?צ|אחרי? ה?צהריים"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
-      interval TTime.Open (hour False 14) (hour False 17)
+      interval TTime.Open (hour False 16) (hour False 18)
   }
 
 ruleNamedmonthDayofmonthOrdinal :: Rule
@@ -750,7 +750,7 @@ ruleThisNoon = Rule
     [ regex "(ל|ב|ה)צהריים"
     ]
   , prod = \_ -> do
-      td <- interval TTime.Open (hour False 12) (hour False 14)
+      td <- interval TTime.Open (hour False 12) (hour False 16)
       Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
   }
 
@@ -761,7 +761,7 @@ ruleThisAfternoon = Rule
     [ regex "אחה(״)?צ|אחרי? ה?צהריים"
     ]
   , prod = \_ -> do
-      td <- interval TTime.Open (hour False 14) (hour False 17)
+      td <- interval TTime.Open (hour False 16) (hour False 18)
       Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
   }
 
@@ -908,7 +908,7 @@ ruleWeekend :: Rule
 ruleWeekend = Rule
   { name = "week-end"
   , pattern =
-    [ regex "(סופש|סופ״ש|סוף ה?שבוע)"
+    [ regex "(סופ.?ש|סופ״ש|סוף ה?שבוע)"
     ]
   , prod = \_ -> tt weekend
   }
