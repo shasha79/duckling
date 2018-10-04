@@ -589,7 +589,7 @@ ruleAfternoon :: Rule
 ruleAfternoon = Rule
   { name = "afternoon"
   , pattern =
-    [ regex "אחה(״)?צ|אחרי? ה?צהריים"
+    [ regex "(ב?שעות )?(אחה(״)?צ|אחרי?|לאחר) ה?צהריים"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
       interval TTime.Open (hour False 16) (hour False 18)
