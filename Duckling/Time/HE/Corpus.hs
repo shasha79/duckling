@@ -112,6 +112,12 @@ allExamples = concat
   , examples (datetime (2014, 10, 0, 0, 0, 0) Month)
              [ "אוקטובר 2014"
              ]
+  , examples (datetime (2013, 10, 1, 0, 0, 0) Day)
+             [ "בתחילת אוקטובר"
+             ]
+  , examples (datetime (2013, 10, 23, 0, 0, 0) Day)
+             [ "סוף אוקטובר"
+             ]
   , examples (datetime (1974, 10, 31, 0, 0, 0) Day)
              [ "10/31/1974"
              , "10/31/74"
@@ -198,6 +204,12 @@ allExamples = concat
              , "3pm"
              ]
   , examples (datetime (2013, 2, 12, 15, 0, 0) Hour)
+             -- "@ 3pm"
+             [ "אחרי 3pm"
+             , "3PM אחרי שעה"
+             , "3PM אחרי השעה"
+             ]
+  , examples (datetime (2013, 2, 12, 15, 0, 0) Hour)
              -- "באיזור שלוש בצהריים"
              [
              ]
@@ -215,6 +227,8 @@ allExamples = concat
              -- "עשרים אחרי שלוש בצהריים"
              [ "3:20p"
              ]
+
+
   , examples (datetime (2013, 2, 12, 15, 30, 0) Minute)
              -- "בשלוש וחצי בערב"
              -- "שלוש וחצי בצהריים"

@@ -204,7 +204,7 @@ ruleIntegerAfterpastIntegerHourofday = Rule
   { name = "integer after|past <integer> (hour-of-day)"
   , pattern =
     [ Predicate $ isIntegerBetween 1 59
-    , regex "אחרי"
+    , regex "אחרי( (ה)?שעה)?"
     , Predicate isAnHourOfDay
     ]
   , prod = \tokens -> case tokens of
@@ -607,6 +607,21 @@ ruleNamedmonthDayofmonthOrdinal = Rule
       _ -> Nothing
   }
 
+ruleNamedmonthDayofThismonthOrdinal :: Rule
+ruleNamedmonthDayofThismonthOrdinal = Rule
+  { name = "this month <day-of-month> (ordinal)"
+  , pattern =
+    [
+    Predicate isDOMOrdinal
+    , regex "לחודש"
+    ]
+  , prod = \tokens -> case tokens of
+      (Token Time td:token:_) -> Token Time <$> intersectDOM td token
+      _ -> Nothing
+  }
+
+
+
 ruleNamedday5 :: Rule
 ruleNamedday5 = Rule
   { name = "named-day"
@@ -725,7 +740,7 @@ ruleThisEvening :: Rule
 ruleThisEvening = Rule
   { name = "this evening"
   , pattern =
-    [ regex "(איזה |ל|ב|ה)ערב"
+    [ regex "(איזה |ל|ב|ה)?(שעות ה?)?ערב"
     ]
   , prod = \_ -> do
       td <- interval TTime.Open (hour False 17) (hour False 0)
@@ -736,7 +751,7 @@ ruleThisMorning :: Rule
 ruleThisMorning = Rule
   { name = "this morning"
   , pattern =
-    [ regex "(איזה |ל|ב|ה)בוקר"
+    [ regex "(איזה |ל|ב|ה)?(שעות ה?)?בוקר"
     ]
   , prod = \_ -> do
       td <- interval TTime.Open (hour False 4) (hour False 12)
@@ -747,7 +762,7 @@ ruleThisNoon :: Rule
 ruleThisNoon = Rule
   { name = "this noon"
   , pattern =
-    [ regex "(ל|ב|ה)צהריים"
+    [ regex "(ל|ב|ה)?צהריים"
     ]
   , prod = \_ -> do
       td <- interval TTime.Open (hour False 12) (hour False 16)
@@ -1066,6 +1081,45 @@ ruleEndOfMonth = Rule
     ]
   , prod = \_ -> tt $ cycleNth TG.Month 1
   }
+{- FIXME: next 2 rules are not working, not clear why :(( -}
+ruleEndOfNamedMonth :: Rule
+ruleEndOfNamedMonth = Rule
+  { name = "at the end of <named-month>"
+  , pattern =
+    [ regex "ב?סוף"
+     , Predicate isAMonth
+    ]
+  , prod = \tokens -> case tokens of
+      (Token RegexMatch (GroupMatch (_:match:_)):Token Time td:_) -> do
+        (sd, ed) <- Just (21, -1)
+        start <- intersect td $ dayOfMonth sd
+        end <- if ed /= -1
+          then intersect td $ dayOfMonth ed
+          else Just $ cycleLastOf TG.Day td
+        Token Time <$> interval TTime.Open start end
+      _ -> Nothing
+  }
+
+
+ruleBeginningOfNamedMonth :: Rule
+ruleBeginningOfNamedMonth = Rule
+  { name = "at the beginning of <named-month>"
+  , pattern =
+    [ regex "ב?תחילת"
+    , Predicate isAMonth
+    ]
+  , prod = \tokens -> case tokens of
+      (Token RegexMatch (GroupMatch (_:match:_)):Token Time td:_) -> do
+        (sd, ed) <- Just (1, 10)
+        start <- intersect td $ dayOfMonth sd
+        end <- if ed /= -1
+          then intersect td $ dayOfMonth ed
+          else Just $ cycleLastOf TG.Day td
+        Token Time <$> interval TTime.Open start end
+      _ -> Nothing
+  }
+
+
 
 ruleYesterday :: Rule
 ruleYesterday = Rule
@@ -1479,6 +1533,8 @@ rules =
   , ruleHourofdayHalf
   , ruleInDuration
   , ruleDayInDuration
+  , ruleEndOfNamedMonth
+  , ruleBeginningOfNamedMonth
   , ruleInNamedmonth
   , ruleIntersect
   , ruleIntersectBy
@@ -1549,6 +1605,7 @@ rules =
   , ruleYyyymmdd
   , ruleThisWeek
   , ruleThisMonth
+  , ruleNamedmonthDayofThismonthOrdinal
   {-, ruleThisPartOfDay -}
   ]
   ++ ruleMonths
