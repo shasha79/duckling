@@ -592,7 +592,7 @@ ruleAfternoon = Rule
     [ regex "(ב?שעות )?(אחה(״)?צ|אחרי?|לאחר) ה?צהריים"
     ]
   , prod = \_ -> Token Time . partOfDay . mkLatent <$>
-      interval TTime.Open (hour False 16) (hour False 18)
+      interval TTime.Open (hour False 16) (hour False 20)
   }
 
 ruleNamedmonthDayofmonthOrdinal :: Rule
@@ -776,7 +776,7 @@ ruleThisAfternoon = Rule
     [ regex "אחה(״)?צ|אחרי? ה?צהריים"
     ]
   , prod = \_ -> do
-      td <- interval TTime.Open (hour False 16) (hour False 18)
+      td <- interval TTime.Open (hour False 16) (hour False 20)
       Token Time . partOfDay <$> intersect (cycleNth TG.Day 0) td
   }
 
